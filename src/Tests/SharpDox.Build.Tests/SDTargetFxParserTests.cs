@@ -86,6 +86,12 @@ namespace SharpDox.Build.Tests
             TestProjectFx(@"TestData\TargetFxFiles\Catel.Core.PCL.csproj", KnownTargetFxs.Pcl);
         }
 
+        [TestMethod]
+        public void RecognizesNetStandard20()
+        {
+            TestProjectFx(@"TestData\TargetFxFiles\Catel.Core.NS20.csproj", KnownTargetFxs.NetStandard20);
+        }
+
         // Workaround since MsTest doesn't have "TestCase" where we can put in parameters
         private void TestProjectFx(string relativeProjectFile, SDTargetFx expectedFx)
         {

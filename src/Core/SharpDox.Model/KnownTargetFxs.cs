@@ -40,6 +40,12 @@ namespace SharpDox.Model
             Name = ".NET Framework 4.6.1"
         };
 
+        public static readonly SDTargetFx Net462 = new SDTargetFx
+        {
+            Identifier = "NET462",
+            Name = ".NET Framework 4.6.2"
+        };
+
         public static readonly SDTargetFx Net47 = new SDTargetFx
         {
             Identifier = "NET47",
@@ -98,6 +104,60 @@ namespace SharpDox.Model
         {
             Identifier = "PCL",
             Name = "Portable Class Libraries"
+        };
+
+        public static readonly SDTargetFx NetStandard = new SDTargetFx
+        {
+            Identifier = "NS",
+            Name = ".NET Standard (unknown version)"
+        };
+
+        public static readonly SDTargetFx NetStandard10 = new SDTargetFx
+        {
+            Identifier = "NS10",
+            Name = ".NET Standard 1.0"
+        };
+
+        public static readonly SDTargetFx NetStandard11 = new SDTargetFx
+        {
+            Identifier = "NS11",
+            Name = ".NET Standard 1.1"
+        };
+
+        public static readonly SDTargetFx NetStandard12 = new SDTargetFx
+        {
+            Identifier = "NS12",
+            Name = ".NET Standard 1.2"
+        };
+
+        public static readonly SDTargetFx NetStandard13 = new SDTargetFx
+        {
+            Identifier = "NS13",
+            Name = ".NET Standard 1.3"
+        };
+
+        public static readonly SDTargetFx NetStandard14 = new SDTargetFx
+        {
+            Identifier = "NS14",
+            Name = ".NET Standard 1.4"
+        };
+
+        public static readonly SDTargetFx NetStandard15 = new SDTargetFx
+        {
+            Identifier = "NS15",
+            Name = ".NET Standard 1.5"
+        };
+
+        public static readonly SDTargetFx NetStandard16 = new SDTargetFx
+        {
+            Identifier = "NS16",
+            Name = ".NET Standard 1.6"
+        };
+
+        public static readonly SDTargetFx NetStandard20 = new SDTargetFx
+        {
+            Identifier = "NS20",
+            Name = ".NET Standard 2.0"
         };
 
         public static readonly SDTargetFx Unknown = new SDTargetFx

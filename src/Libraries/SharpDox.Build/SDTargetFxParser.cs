@@ -32,6 +32,12 @@ namespace SharpDox.Build
                 var targetPlatformVersion = ReadXPathElementValue(document, "/Project/PropertyGroup/TargetPlatformVersion");
                 var targetFrameworkProfile = ReadXPathElementValue(document, "/Project/PropertyGroup/TargetFrameworkProfile");
 
+                if (string.IsNullOrWhiteSpace(targetFrameworkIdentifier))
+                {
+                    // TODO: Support TargetFrameworks (e.g. '<TargetFrameworks>netcoreapp1.0;net451</TargetFrameworks>')
+                    targetFrameworkIdentifier = ReadXPathElementValue(document, "/Project/PropertyGroup/TargetFramework");
+                }
+
                 targetFx = GetTargetFx(targetFrameworkIdentifier, targetFrameworkVersion, targetPlatformIdentifier, targetPlatformVersion, targetFrameworkProfile);
             }
 
@@ -43,9 +49,15 @@ namespace SharpDox.Build
             var value = string.Empty;
 
             var mgr = new XmlNamespaceManager(new NameTable());
+
             mgr.AddNamespace("x", "http://schemas.microsoft.com/developer/msbuild/2003");
 
             var element = doc.XPathSelectElement(xpath.Replace("/", "/x:"), mgr);
+            if (element == null)
+            {
+                element = doc.XPathSelectElement(xpath);
+            }
+
             if (element != null)
             {
                 value = element.Value;
@@ -73,6 +85,43 @@ namespace SharpDox.Build
             {
                 targetFx = KnownTargetFxs.Pcl;
             }
+            else if (targetFrameworkIdentifier.ToLower().StartsWith("netstandard"))
+            {
+                targetFx = KnownTargetFxs.NetStandard;
+
+                if (targetFrameworkIdentifier.EndsWith("1.0"))
+                {
+                    targetFx = KnownTargetFxs.NetStandard10;
+                }
+                else if (targetFrameworkIdentifier.EndsWith("1.1"))
+                {
+                    targetFx = KnownTargetFxs.NetStandard11;
+                }
+                else if (targetFrameworkIdentifier.EndsWith("1.2"))
+                {
+                    targetFx = KnownTargetFxs.NetStandard12;
+                }
+                else if (targetFrameworkIdentifier.EndsWith("1.3"))
+                {
+                    targetFx = KnownTargetFxs.NetStandard13;
+                }
+                else if (targetFrameworkIdentifier.EndsWith("1.4"))
+                {
+                    targetFx = KnownTargetFxs.NetStandard14;
+                }
+                else if (targetFrameworkIdentifier.EndsWith("1.5"))
+                {
+                    targetFx = KnownTargetFxs.NetStandard15;
+                }
+                else if (targetFrameworkIdentifier.EndsWith("1.6"))
+                {
+                    targetFx = KnownTargetFxs.NetStandard16;
+                }
+                else if (targetFrameworkIdentifier.EndsWith("2.0"))
+                {
+                    targetFx = KnownTargetFxs.NetStandard20;
+                }
+            }
             else if (string.Equals(targetFrameworkVersion, "v3.0", StringComparison.OrdinalIgnoreCase))
             {
                 targetFx = KnownTargetFxs.Net30;
@@ -96,6 +145,10 @@ namespace SharpDox.Build
             else if (string.Equals(targetFrameworkVersion, "v4.6.1", StringComparison.OrdinalIgnoreCase))
             {
                 targetFx = KnownTargetFxs.Net461;
+            }
+            else if (string.Equals(targetFrameworkVersion, "v4.6.2", StringComparison.OrdinalIgnoreCase))
+            {
+                targetFx = KnownTargetFxs.Net462;
             }
             else if (string.Equals(targetFrameworkVersion, "v4.7", StringComparison.OrdinalIgnoreCase))
             {
